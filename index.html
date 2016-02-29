@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>LPK25</title>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/dhg/Skeleton/master/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/dhg/Skeleton/master/css/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style type="text/css">
+    body { }
+      .loading-text {
+        text-align: center;
+        margin-top: 100px;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+
+
+  <div id="loader">
+    <h3 class="loading-text">Connecting to LPK25 device...</h3>
+    <div class="loader">Loading...</div>
+  </div>
+
+  <div id="keyboard" class="hidden">
+    <div class="keyboard">
+       <div class="key key-white key-48"></div>
+       <div class="key key-black key-49"></div>
+       <div class="key key-white key-50"></div>
+       <div class="key key-black key-51"></div>
+       <div class="key key-white key-52"></div>
+       <div class="key key-white key-53"></div>
+       <div class="key key-black key-54"></div>
+       <div class="key key-white key-55"></div>
+       <div class="key key-black key-56"></div>
+       <div class="key key-white key-57"></div>
+       <div class="key key-black key-58"></div>
+       <div class="key key-white key-59"></div>
+       <div class="key key-white key-60"></div>
+       <div class="key key-black key-61"></div>
+       <div class="key key-white key-62"></div>
+       <div class="key key-black key-63"></div>
+       <div class="key key-white key-64"></div>
+       <div class="key key-white key-65"></div>
+       <div class="key key-black key-66"></div>
+       <div class="key key-white key-67"></div>
+       <div class="key key-black key-68"></div>
+       <div class="key key-white key-69"></div>
+       <div class="key key-black key-70"></div>
+       <div class="key key-white key-71"></div>
+       <div class="key key-white key-72"></div>
+     </div>
+   </div>
+
+   <div id="keyboardUnavailable" class="hidden">
+     <h3 class="loading-text">Unable to find your LPK25.</h3>
+   </div>
+
+    <script type="text/javascript">
+      'use strict'
+
+      const LPK25 = require('lpk25')
+      const player = require('play-sound')()
+
+      const device = new LPK25()
+
+      const keys = {
+        48: 'WorkIt1.idf',
+        49: 'MakeIt1.idf',
+        50: 'DoIt1.idf',
+        51: 'MakesUs1.idf',
+        52: 'Harder1.idf',
+        53: 'Better1.idf',
+        54: 'Faster1.idf',
+        55: 'Stronger1.idf',
+
+        56: 'MoreThan1.idf',
+        57: 'Hour1.idf',
+        58: 'Our1.idf',
+        59: 'Never1.idf',
+        60: 'Ever1.idf',
+        61: 'After1.idf',
+        62: 'WorkIs1.idf',
+        63: 'Over1.idf'
+      }
+
+      // player.play('./data/beat.idf')
+
+      device.on('event', (event) => {
+        console.log(event)
+      })
+
+      device.on('keyup', (event) => {
+        console.log('keyup')
+        var a = document.getElementsByClassName('key-' + event.key)
+        console.log(a)
+        Array.prototype.forEach.call(a, el => {
+          el.classList.remove("key-active");
+        })
+
+
+
+        // player.play('./data/After1.idf')
+      })
+
+      device.on('keydown', (event) => {
+        var a = document.getElementsByClassName('key-' + event.key)
+
+        if (keys[event.key]) {
+          player.play('./data/' + keys[event.key])
+        }
+
+        Array.prototype.forEach.call(a, el => {
+          el.classList.add("key-active");
+        })
+      })
+
+      try {
+        device.open()
+      } catch (e) {
+        console.log(e)
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('keyboardUnavailable').style.display = 'block';
+      } finally {
+
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('keyboardUnavailable').style.display = 'none';
+        document.getElementById('keyboard').classList.remove('hidden');
+      }
+
+
+    </script>
+  </body>
+</html>

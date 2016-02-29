@@ -1,0 +1,36 @@
+{
+  "name": "lpk25-console",
+  "version": "0.0.0",
+  "description": "Virtual Console for the AKAI LPK25 MIDI Keyboard",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "download-sounds": "wget -O idaft.zip http://psp.brewology.com/downloads/get.php?id=10151 && unzip -j idaft.zip PSP/GAME/iDaft/data/*.idf -d data",
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bencevans/lpk25-console.git"
+  },
+  "keywords": [
+    "lpk25",
+    "keyboard",
+    "daft",
+    "punk",
+    "soundboard",
+    "music",
+    "midi"
+  ],
+  "author": "Ben Evans <ben@bensbit.co.uk> (http://bensbit.co.uk)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bencevans/lpk25-console/issues"
+  },
+  "homepage": "https://github.com/bencevans/lpk25-console#readme",
+  "dependencies": {
+    "electron-prebuilt": "^0.36.8",
+    "lpk25": "^1.0.0",
+    "play": "^0.5.0",
+    "play-sound": "0.0.7"
+  }
+}
